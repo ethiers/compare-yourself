@@ -11,7 +11,7 @@ export class SignupComponent implements OnInit {
   confirmUser = false;
   didFail = false;
   isLoading = false;
-  @ViewChild('usrForm') form: NgForm;
+  @ViewChild('usrForm', {static: false}) form: NgForm;
 
   constructor(private authService: AuthService) {
   }

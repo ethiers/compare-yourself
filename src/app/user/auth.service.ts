@@ -1,24 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {Observer, Subject} from 'rxjs';
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
-import { User } from './user.model';
+import {User} from './user.model';
 
 @Injectable()
 export class AuthService {
   authIsLoading = new BehaviorSubject<boolean>(false);
   authDidFail = new BehaviorSubject<boolean>(false);
   authStatusChanged = new Subject<boolean>();
-  constructor(private router: Router) {}
+
+  constructor(private router: Router) {
+  }
+
   signUp(username: string, email: string, password: string): void {
     this.authIsLoading.next(true);
     const user: User = {
-      username: username,
-      email: email,
-      password: password
+      'username': username,
+      'email': email,
+      'password': password
     };
     const emailAttribute = {
       Name: 'email',
@@ -26,12 +29,14 @@ export class AuthService {
     };
     return;
   }
+
   confirmUser(username: string, code: string) {
     this.authIsLoading.next(true);
     const userData = {
       Username: username,
     };
   }
+
   signIn(username: string, password: string): void {
     this.authIsLoading.next(true);
     const authData = {
@@ -41,14 +46,20 @@ export class AuthService {
     this.authStatusChanged.next(true);
     return;
   }
-  getAuthenticatedUser() {
+
+  getAuthenticatedUser(): any {
+
+    return;
   }
+
   logout() {
     this.authStatusChanged.next(false);
   }
+
   isAuthenticated(): Observable<boolean> {
     const user = this.getAuthenticatedUser();
-    const obs = Observable.create((observer) => {
+
+    const obs = new Observable((observer: Observer<any>) => {
       if (!user) {
         observer.next(false);
       } else {
@@ -58,6 +69,7 @@ export class AuthService {
     });
     return obs;
   }
+
   initAuth() {
     this.isAuthenticated().subscribe(
       (auth) => this.authStatusChanged.next(auth)

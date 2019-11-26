@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-12 col-sm-10 col-md-6 cold-sm-offset-1 col-md-offset-3 text-center">
+  <div class="col-xl-12 offset-3 text-center">
     <h2>Your Results</h2>
     <button class="btn btn-success" (click)="onStartSetData()">Set Data</button>
     <button class="btn btn-danger" (click)="onClearData()">Clear Data on Server</button>
@@ -8,7 +8,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12 col-sm-10 col-md-6 cold-sm-offset-1 col-md-offset-3 text-center">
+  <div class="col-xl-12 offset-3 text-center">
     <h3>Select Filter</h3>
     <div class="list-group">
       <a style="cursor: pointer;" class="list-group-item" (click)="onFilter('age')" [ngClass]="{active: filter == 'age'}">Your Age: {{ user.age }}</a>

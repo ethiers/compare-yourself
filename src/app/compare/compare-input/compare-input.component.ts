@@ -10,7 +10,7 @@ import { CompareService } from '../compare.service';
   styleUrls: ['./compare-input.component.css']
 })
 export class CompareInputComponent implements OnInit {
-  @ViewChild('compareForm') form: NgForm;
+  @ViewChild('compareForm', {static: false}) form: NgForm;
   isLoading = false;
   couldNotLoadData = false;
 
