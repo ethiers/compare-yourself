@@ -25,26 +25,33 @@ export class CompareService {
     this.dataEdited.next(false);
     this.userData = data;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'XX'
-      })
-    };
+    this.authService.getAuthenticatedUser().getSession((err, session) => {
+      if (err) {
+        return;
+      }
 
-    this.http.post('https://API_ID.execute-api.REGION.amazonaws.com/dev/', data, httpOptions)
-      .subscribe(
-        (result) => {
-          this.dataLoadFailed.next(false);
-          this.dataIsLoading.next(false);
-          this.dataEdited.next(true);
-        },
-        (error) => {
-          this.dataIsLoading.next(false);
-          this.dataLoadFailed.next(true);
-          this.dataEdited.next(false);
-        }
-      );
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': session.getIdToken().getJwtToken()
+        })
+      };
+
+      this.http.post('https://API_ID.execute-api.ca-central-1.amazonaws.com/dev/compare-yourself', data, httpOptions)
+        .subscribe(
+          (result) => {
+            this.dataLoadFailed.next(false);
+            this.dataIsLoading.next(false);
+            this.dataEdited.next(true);
+          },
+          (error) => {
+            this.dataIsLoading.next(false);
+            this.dataLoadFailed.next(true);
+            this.dataEdited.next(false);
+          }
+        );
+
+    });
   }
 
   onRetrieveData(all = true) {
